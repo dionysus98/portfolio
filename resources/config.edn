@@ -1,0 +1,17 @@
+{:secrets-path #env SECRETS_PATH
+ :secrets      #include #ref [:secrets-path]
+ :base-url     #ref [:secrets :base-url]
+ :databases    #ref [:secrets :databases]
+ :media-path   {:audio-path    "resources/media/audio/"
+                :video-path    "resources/media/video/"
+                :image-path    "resources/media/image/"
+                :document-path "resources/media/document/"}
+
+ :components   {:comp/email           {:host     #ref [:secrets :email :host]
+                                       :ssl-port #ref [:secrets :email :ssl-port]
+                                       :tls-port #ref [:secrets :email :tls-port]
+                                       :from     #ref [:secrets :email :from]
+                                       :password #ref [:secrets :email :password]}
+                :base.web/server {:port            #ref [:secrets :components :base.web/server :port]
+                                  :allowed-origins #ref [:secrets :components :base.web/server :allowed-origins]}
+                :base.web/n-repl {:port #ref [:secrets :components :base.web/n-repl :port]}}}

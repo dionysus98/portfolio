@@ -1,0 +1,4 @@
+{:lint-as {mount.core/defstate clojure.core/def
+           com.rpl.specter/recursive-path clj-kondo.lint-as/def-catch-all}
+ :linters {:unresolved-var    {:exclude [com.rpl.specter]}
+           :unresolved-symbol {:exclude [(io.pedestal.interceptor.error/error-dispatch [ctx ex])]}}}

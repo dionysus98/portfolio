@@ -1,12 +1,19 @@
 {
-    "calva.replConnectSequences": [
-        {
-            "projectType": "deps.edn",
-            "name": "portfolio",
-            "cljsType": "none",
-            "menuSelections": {
-                "cljAliases": ["dev", "test", "+default"]
-            }
-        }
-    ]
+  "calva.replConnectSequences": [
+    {
+      "projectType": "deps.edn",
+      "name": "portfolio",
+      "cljsType": "none",
+      "jackInEnv": {
+        "SECRETS_PATH": "/home/aby/code/clojure/portfolio/resources/dev/secrets.edn",
+        "CLIP_SYSTEM": "/home/aby/code/clojure/portfolio/development/src/system.edn"
+      },
+      "afterCLJReplJackInCode": "(require [user] :reload) (in-ns 'user) (start-system!)",
+      "autoSelectForJackIn": true,
+      "projectRootPath": ["."],
+      "menuSelections": {
+        "cljAliases": ["dev"]
+      }
+    }
+  ]
 }

@@ -1,10 +1,66 @@
-{:aliases  {:dev {:extra-paths ["development/src"]
-                  :extra-deps {org.clojure/clojure {:mvn/version "1.11.1"}}}
+{:aliases  {:dev  {:extra-paths ["development/src" "resources" "config"]
+                   :exec-fn     user/start-system!
+                   :extra-deps  {org.clojure/clojure              {:mvn/version "1.11.1"}
+                                 org.clojure/core.match           {:mvn/version "1.0.1"}
+                                 org.clojure/tools.namespace      {:mvn/version "1.4.1"}
+                                 org.clojure/data.csv             {:mvn/version "1.0.1"}
+                                 djblue/portal                    {:mvn/version "0.36.0"}
 
+                                 juxt/clip                        {:mvn/version "0.28.0"}
+                                 tick/tick                        {:mvn/version "0.5.0-RC5"}
+                                 aero/aero                        {:mvn/version "1.1.6"}
+                                 metosin/malli                    {:mvn/version "0.10.1"}
+                                 com.rpl/specter                  {:mvn/version "1.1.3"}
+                                 clj-http/clj-http                {:mvn/version "3.12.3"}
+                                 dk.ative/docjure                 {:mvn/version "1.16.0"}
+
+                                 io.pedestal/pedestal.service     {:mvn/version "0.5.10"}
+                                 io.pedestal/pedestal.jetty       {:mvn/version "0.5.10"}
+                                 io.pedestal/pedestal.log         {:mvn/version "0.5.10"}
+                                 io.pedestal/pedestal.interceptor {:mvn/version "0.5.10"}
+                                 io.pedestal/pedestal.route       {:mvn/version "0.5.10"}
+                                 com.fzakaria/slf4j-timbre        {:mvn/version "0.3.21"}
+
+                                 metosin/tilakone                 {:mvn/version "0.0.4"}
+                                 jarohen/chime                    {:mvn/version "0.3.3"}
+                                 hiccup/hiccup                    {:mvn/version "2.0.0-alpha2"}
+                                 com.taoensso/nippy               {:mvn/version "3.2.0"}
+                                 nrepl/nrepl                      {:mvn/version "1.1.0-alpha1"}
+                                 cider/cider-nrepl                {:mvn/version "0.29.0"}
+                                 com.draines/postal               {:mvn/version "2.0.5"}
+
+                                 buddy/buddy-core                 {:mvn/version "1.10.413"}
+                                 buddy/buddy-auth                 {:mvn/version "3.0.323"}
+                                 buddy/buddy-hashers              {:mvn/version "1.8.158"}
+                                 buddy/buddy-sign                 {:mvn/version "3.4.333"}
+
+                                 com.xtdb/xtdb-core               {:mvn/version "1.23.0"}
+                                 com.xtdb/xtdb-jdbc               {:mvn/version "1.23.0"}
+                                 com.xtdb/xtdb-rocksdb            {:mvn/version "1.23.0"}
+                                 com.xtdb/xtdb-lucene             {:mvn/version "1.23.0"}
+                                 org.postgresql/postgresql        {:mvn/version "42.2.18"}
+
+                                 portfolio/admin                  {:local/root "components/admin"}
+                                 portfolio/attachment             {:local/root "components/attachment"}
+                                 portfolio/scheduler              {:local/root "components/scheduler"}
+                                 portfolio/xtdb                   {:local/root "components/xtdb"}
+                                 portfolio/validation             {:local/root "components/validation"}
+                                 portfolio/crud                   {:local/root "components/crud"}
+                                 portfolio/util                   {:local/root "components/util"}
+
+                                 portfolio/email                  {:local/root "components/email"}
+                                 portfolio/fsm                    {:local/root "components/fsm"}
+                                 portfolio/message                {:local/root "components/message"}
+                                 portfolio/ui                     {:local/root "components/ui"}
+
+                                 portfolio/web                    {:local/root "bases/web"}}}
             :test {:extra-paths []}
-
-            :poly {:main-opts ["-m" "polylith.clj.core.poly-cli.core"]
-                   :extra-deps {polyfy/polylith
-                                {:git/url   "https://github.com/polyfy/polylith"
-                                 :sha       "1209a81e6b8f70987050d65d106e99d1a902969a"
-                                 :deps/root "projects/poly"}}}}}
+            :poly {:main-opts  ["-m" "polylith.clj.core.poly-cli.core"]
+                   :extra-deps {polyfy/polylith {:git/url   "https://github.com/polyfy/polylith"
+                                                 :sha       "1209a81e6b8f70987050d65d106e99d1a902969a"
+                                                 :deps/root "projects/poly"}}}
+            :build {:deps       {io.github.seancorfield/build-clj {:git/tag "v0.9.2"
+                                                                   :git/sha "9c9f078"}
+                                 org.clojure/tools.deps           {:mvn/version "0.16.1281"}}
+                    :paths      ["build/resources"]
+                    :ns-default build}}}

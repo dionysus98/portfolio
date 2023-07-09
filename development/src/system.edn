@@ -1,0 +1,24 @@
+{:components {:config             {:start (aero.core/read-config (clojure.java.io/file "resources/config.edn"))}
+
+              :db/portfolio       {:start (portfolio.xtdb.interface/start!
+                                           (clojure.core/get-in (clip/ref :config) [:databases :portfolio]))
+                                   :stop  (.close this)}
+
+              :comp/email          {:start (portfolio.email.interface/init!
+                                            (clojure.core/get-in (clip/ref :config) [:components :comp/email]))
+                                    :stop  (portfolio.email.interface/init! nil)}
+
+              :comp/message        {:start (portfolio.message.interface/init! (clip/ref :db/portfolio))
+                                    :stop  (portfolio.message.interface/init! nil)}
+
+              :base.web/n-repl    {:start (portfolio.web.core/start-nrepl-server
+                                           (clojure.core/get-in
+                                            (clip/ref :config) [:components :base.web/n-repl :port]))
+                                   :stop  (portfolio.web.core/stop-nrepl-server this)}
+
+              :base.web/server    {:start (portfolio.web.core/start-server
+                                           :port
+                                           (clojure.core/get-in
+                                            (clip/ref :config) [:components :base.web/server :port]))
+                                   :stop  (portfolio.web.core/stop-server this)}}}
+
