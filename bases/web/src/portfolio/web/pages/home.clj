@@ -5,6 +5,6 @@
 (defn home [& args]
   (->> (base-layout
         {}
-        [:article "Hello"]
+        [:article [:button "helll"]]
         #_(el/card {:title "HELLO!!"
                     :content args}))))

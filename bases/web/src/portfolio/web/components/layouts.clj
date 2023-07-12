@@ -4,31 +4,16 @@
             [portfolio.web.components.header :refer [header]]
             [portfolio.web.lib.ui.htmx :refer [page style]]
             [portfolio.web.lib.ui.states :refer [dashboard-items]]
-            [portfolio.web.lib.ui.styles :refer [colors]]))
+            [portfolio.web.lib.ui.styles :refer [colors]]
+            [portfolio.web.components.corner-bubble :refer [corner-bubble]]))
 
 (defn base-layout [opts & body]
-  (->> [:body
-        (style {:overflow "hidden"
-                :max-height "100vh"
-                :max-width "100vw"
-                :margin "0 auto"
-                :padding "0"})
-        [:div (style (merge {:position "absolute"
-                             :top "0%"}))
-         "a"]
-        [:div (style (merge {:position "absolute"
-                             :top "0%"
-                             :left "100%"}))
-         "b"]
-        [:div (style (merge {:position "absolute"
-                             :top "100%"
-                             :left "0%"}))
-         "c"]
-        [:div (style (merge {:position "absolute"
-                             :top "100%"
-                             :left "100%"}))
-         "d"]
-        body]
+  (->> [:body.container-fluid (style :position "relative")
+        (corner-bubble []  "home")
+        (corner-bubble [:left] "send")
+        (corner-bubble [:top] "code")
+        (corner-bubble [:top :left] "read_more")
+        [:div (style :margin "0" :padding "0" :z-index "9999") body]]
        (page opts)))
 
 (defn side-panel [di selected-id]

@@ -1,7 +1,7 @@
 (ns portfolio.web.lib.ui.styles)
 
 (def colors
-  {:primary "#2C3E50"
+  {:primary "#11191f"
    :marble-blue "#566D7E"
    :light-blue "#EDF7FA"
    :accent  "#5DADE2"

@@ -47,51 +47,20 @@
                                          (str/replace "/" "-")))
                             value))])))})
 
-(def ui-dashboard
-  {:name ::ui-dashboard
+(def ui-corner-bubble
+  {:name :ui-corner-bubble
    :enter (fn [context]
             (let [_ (reset! h/test-atom context)
                   request (:request context)
-                  selected (-> request :path-params :item keyword)]
+                  selected (some-> request :path-params :event keyword)]
               (h/res context (dashboard selected dashboard-items))))})
-
-(comment
-  (let [context @h/test-atom
-        request (:request context)
-        selected (-> request :path-params :item keyword)]
-    (dashboard selected dashboard-items)
-    (let [li (fn [v]
-               (as-> (name v) slug
-                 {:href (str "/" slug)
-                  :selected selected
-                  :v v
-                  :class (if (= selected v) "is-active" "")}))
-          li-items (->> dashboard-items
-                        (util/common-elements dashboard-items)
-                        (map #(-> % name keyword))
-                        sort)]
-      (map li li-items)))
-  :rcf)
-
-#_(def ui-header
-    {:name ::ui-header
-     :enter (fn [context]
-              (let [_ (reset! h/test-atom context)
-                    request (:request context)
-                    user (-> request :session :token token->user)
-                    accesses (authr/user-ui-access (:xt/id user))
-                    di (->> dashboard-items
-                            (util/common-elements accesses)
-                            (map #(-> % name keyword))
-                            sort)
-                    active? (-> request :path-params :set-active read-string)]
-                (h/res context
-                       (header {:user user
-                                :dashboard-items di
-                                :active-menu? active?}))))})
 
 (def routes
   ["/ui"
+
+   ["/corner-bubble/:event"
+    ^:interceptors [(body-params)]
+    {:post `ui-corner-bubble}]
 
    ["/attachment/view/:attachment-id"
     {:get `view-attachment}]
