@@ -7,12 +7,29 @@
             [portfolio.web.lib.ui.styles :refer [colors]]))
 
 (defn base-layout [opts & body]
-  (page
-   opts
-   [:div {:style {:margin     "0 auto"
-                  :max-height "100%"
-                  :min-height "100vh"}}
-    body]))
+  (->> [:body
+        (style {:overflow "hidden"
+                :max-height "100vh"
+                :max-width "100vw"
+                :margin "0 auto"
+                :padding "0"})
+        [:div (style (merge {:position "absolute"
+                             :top "0%"}))
+         "a"]
+        [:div (style (merge {:position "absolute"
+                             :top "0%"
+                             :left "100%"}))
+         "b"]
+        [:div (style (merge {:position "absolute"
+                             :top "100%"
+                             :left "0%"}))
+         "c"]
+        [:div (style (merge {:position "absolute"
+                             :top "100%"
+                             :left "100%"}))
+         "d"]
+        body]
+       (page opts)))
 
 (defn side-panel [di selected-id]
   (let [li (fn [v]

@@ -106,3 +106,10 @@
     display: none;
   }
 }
+
+.arc {
+  overflow: hidden;
+  display: block;
+  position: absolute;
+  top: 50%;
+}

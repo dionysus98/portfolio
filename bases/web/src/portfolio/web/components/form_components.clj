@@ -185,13 +185,17 @@
    (merge {:type "button" :hx-swap "innerHTML" :hx-sync "closest form:abort"} params)
    body])
 
-(defn form-box [{:keys [id title post btn-label show-title?] :as params} & form-body]
-  (let [slug (name id)
+(defn form-box [{:keys [id title post btn-label show-title?]
+                 :as   params} & form-body]
+  (let [slug        (name id)
         html-err-id (str slug "-form-error")
-        hx-post (or post (str "/" slug "/create"))]
+        hx-post     (or post (str "/" slug "/create"))]
     [:div.box.has-background-light.m-5.p-4
-     (when-not (false? show-title?) [:p.subtitle (or title (keyword->title id))])
-     [:form (merge {:hx-post hx-post :hx-target (str "#" html-err-id)} (:form-params params))
+     (when-not (false? show-title?)
+       [:p.subtitle (or title (keyword->title id))])
+     [:form (merge {:hx-post   hx-post
+                    :hx-target (str "#" html-err-id)}
+                   (:form-params params))
       form-body
       [:article.message.is-danger {:id html-err-id}]
       (if btn-label

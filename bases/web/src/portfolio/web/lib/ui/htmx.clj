@@ -5,11 +5,13 @@
    holding all the style attributes in a string as required by html inline styles.   
    e.g: (style {:margin '45px' :text-align 'center}) -> {:style 'margin:45px; text-align:center;'}     
    "
-  [params]
+  [& {:as keyvals}]
   (let [fmt-str #(let [[kwd val] %]
                    (str (name kwd) ":" val "; "))
-        create-style (->> params (map fmt-str) (apply str) .trim)]
-    {:style create-style}))
+        create-style (->> (dissoc keyvals :str?) (map fmt-str) (apply str) .trim)]
+    (if (:str? keyvals)
+      create-style
+      {:style create-style})))
 
 (defn g-fonts
   [families]
@@ -28,13 +30,10 @@
                 canonical
                 font-families
                 head
-                body-style]}
-   & contents]
+                html-tag-attr]}
+   & html-contents]
   [:html
-   (merge
-    {:lang lang}
-    (style {:min-height "100%"
-            :height "auto"}))
+   (merge {:lang lang} html-tag-attr)
    [:head
     [:title title]
     [:meta {:name "description" :content description}]
@@ -62,14 +61,12 @@
                :rel "preconnect"}]
        (g-fonts font-families)))
     (apply list head)]
-   [:body.has-navbar-fixed-top
-    (style (merge {:margin "0 auto" :padding "0"} body-style))
-    contents]])
+   html-contents])
 
 (defn base [opts & body]
   (let [default-opts #:base{:title "My Application"
                             :lang "en-US"
-                            :icon "/img/star.gif"
+                            :icon "/img/logo.png"
                             :description "My Application Description"
                             :image "https://clojure.org/images/clojure-logo-120b.png"}
         merged-opts (-> default-opts
@@ -79,9 +76,10 @@
                          (fn [head]
                            (concat
                             [[:link {:rel "stylesheet" :href "/css/main.css"}]
-                             [:link
-                              {:rel "stylesheet"
-                               :href "https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma-rtl.min.css"}]
+                             [:link {:rel "stylesheet" :href "/css/pico-1.5.10/css/pico.min.css"}]
+                             #_[:link
+                                {:rel "stylesheet"
+                                 :href "https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma-rtl.min.css"}]
                              [:script {:defer "defer" :src "/js/htmx@1.8.4.min.js"}]
                              [:script {:defer "defer" :src "/js/hyperscript@0.9.7.min.js"}]
                              [:script {:defer "defer" :src "/js/main.js"}]]
@@ -90,7 +88,7 @@
 
 (defn page [opts & body]
   (-> opts
-      (merge {:base/title "OPS sales Order"
-              :base/description "Ops Sales order applicatoin"
+      (merge {:base/title "Avy's Portfolio"
+              :base/description "Avy's Portfolio WWeb Applicatoin"
               :base/font-families ["Material+Icons"]})
       (base body)))
