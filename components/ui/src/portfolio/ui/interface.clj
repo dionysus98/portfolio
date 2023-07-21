@@ -6,8 +6,8 @@
    holding all the style attributes in a string as required by html inline styles.   
    e.g: (style {:margin '45px' :text-align 'center}) -> {:style 'margin:45px; text-align:center;'}     
    "
-  [params]
-  (core/style params))
+  [& {:as keyvals}]
+  (core/style keyvals))
 
-(defn base [opts & contents]
-  (core/base opts contents))
+(defn base-html [opts & contents]
+  (core/base-html opts contents))

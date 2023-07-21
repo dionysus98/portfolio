@@ -42,3 +42,4 @@ projects/**/pom.xml
 secrets.edn
 .vscode/settings.json
 data
+logs

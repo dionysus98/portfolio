@@ -1,6 +1,6 @@
 (ns portfolio.web.components.header
   (:require [portfolio.util.interface :refer [keyword->str]]
-            [portfolio.web.lib.ui.htmx :refer [style]]
+            [portfolio.ui.interface :refer [style]]
             [portfolio.web.lib.ui.styles :refer [colors]]))
 
 (defn header [opts]

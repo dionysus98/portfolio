@@ -1,7 +1,7 @@
 (ns portfolio.web.components.corner-bubble
   (:require [clojure.core.match :refer [match]]
             [portfolio.util.interface :as util]
-            [portfolio.web.lib.ui.htmx :refer [style]]
+            [portfolio.ui.interface :refer [style]]
             [portfolio.web.lib.ui.styles :refer [colors]]))
 
 (def styles

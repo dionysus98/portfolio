@@ -2,19 +2,26 @@
   (:require [portfolio.util.interface :refer [keyword->title] :as util]
             [portfolio.web.components.form-components :as form]
             [portfolio.web.components.header :refer [header]]
-            [portfolio.web.lib.ui.htmx :refer [page style]]
+            [portfolio.web.lib.ui.htmx :refer [page]]
+            [portfolio.ui.interface :refer [style]]
             [portfolio.web.lib.ui.states :refer [dashboard-items]]
             [portfolio.web.lib.ui.styles :refer [colors]]
             [portfolio.web.components.corner-bubble :refer [corner-bubble]]))
 
 (defn base-layout [opts & body]
-  (->> [:body.container-fluid (style :position "relative")
-        (corner-bubble []  "home")
-        (corner-bubble [:left] "send")
-        (corner-bubble [:top] "code")
-        (corner-bubble [:top :left] "read_more")
-        [:div (style :margin "0" :padding "0" :z-index "9999") body]]
-       (page opts)))
+  (if (map? opts)
+    (->> [:body.container-fluid
+          (corner-bubble []  "home")
+          (corner-bubble [:left] "send")
+          (corner-bubble [:top] "code")
+          (corner-bubble [:top :left] "read_more")
+          [:div (style :margin "0"
+                       :padding "0"
+                       :position "relative"
+                       :z-index "9999")
+           body]]
+         (page opts))
+    (apply base-layout {} opts body)))
 
 (defn side-panel [di selected-id]
   (let [li (fn [v]

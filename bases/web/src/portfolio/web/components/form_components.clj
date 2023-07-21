@@ -1,7 +1,7 @@
 (ns portfolio.web.components.form-components
   (:require [clojure.string :as str]
             [portfolio.util.interface :refer [keyword->str keyword->title remove-nil]]
-            [portfolio.web.lib.ui.htmx :refer [style]]))
+            [portfolio.ui.interface :refer [style]]))
 
 #_(defn serailize [label value data]
     (let [tns #(hash-map :label (-> % first label str)

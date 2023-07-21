@@ -5,13 +5,13 @@
    holding all the style attributes in a string as required by html inline styles.   
    e.g: (style {:margin '45px' :text-align 'center}) -> {:style 'margin:45px; text-align:center;'}     
    "
-  [params & {:keys [return-string?]}]
+  [& {:as keyvals}]
   (let [fmt-str #(let [[kwd val] %]
                    (str (name kwd) ":" val "; "))
-        style-str (->> params (map fmt-str) (apply str) .trim)]
-    (if return-string?
-      style-str
-      {:style style-str})))
+        create-style (->> (dissoc keyvals :str?) (map fmt-str) (apply str) .trim)]
+    (if (:str? keyvals)
+      create-style
+      {:style create-style})))
 
 (defn g-fonts
   [families]
@@ -20,7 +20,7 @@
                          (str "&family=" f)))
           :rel "stylesheet"}])
 
-(defn base
+(defn base-html
   [{:base/keys [title
                 description
                 lang
@@ -29,19 +29,11 @@
                 url
                 canonical
                 font-families
-                head]
-    :or {title "My Application"
-         lang "en-US"
-         font-families ["Material+Icons"]
-         icon "/img/star.gif"
-         description "My Application Description"
-         image "https://clojure.org/images/clojure-logo-120b.png"}}
-   & contents]
+                head
+                html-tag-attr]}
+   & html-contents]
   [:html
-   (merge
-    {:lang lang}
-    (style {:min-height "100%"
-            :height "auto"}))
+   (merge {:lang lang} html-tag-attr)
    [:head
     [:title title]
     [:meta {:name "description" :content description}]
@@ -69,7 +61,7 @@
                :rel "preconnect"}]
        (g-fonts font-families)))
     (apply list head)]
-   contents])
+   html-contents])
 
 (defn example-page
   "An example base page using htmx, hyperscript, bulma and a local javascript file
@@ -94,7 +86,7 @@
         merged-opts  (-> default-opts
                          (merge opts)
                          (update :base/head update-head))]
-    (apply base
+    (apply base-html
            merged-opts
            [:body (style (merge {:margin "0 auto" :padding "0"}))
             body])))

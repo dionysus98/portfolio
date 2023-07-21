@@ -1,5 +1,5 @@
 (ns portfolio.web.components.elements
-  (:require [portfolio.web.lib.ui.htmx :as htmx]
+  (:require [portfolio.ui.interface :as ui]
             [portfolio.util.interface :refer [remove-nil]]))
 
 (defn flexbox [& body]
@@ -80,7 +80,7 @@
        (:last-row params)]]]
     (hero {:class "is-fullheight"}
           [:div.is-flex.is-flex-direction-row.is-justify-content-center.is-flex-direction-column
-           (htmx/style {:transform "scale(2)"})
+           (ui/style {:transform "scale(2)"})
            [:span.material-icons.has-text-centered "warning"]
            [:p "No Content to display"]])))
 

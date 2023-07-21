@@ -2,7 +2,6 @@
   (:require [clojure.string :as str]
             [io.pedestal.http.body-params :refer [body-params]]
             [io.pedestal.http.ring-middlewares :refer [multipart-params]]
-            [portfolio.util.interface :as util]
             [portfolio.web.components.dashboard :refer [dashboard]]
             [portfolio.web.components.elements :as el]
             [portfolio.web.handlers.core :as h]
